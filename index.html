@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jack Schiavo — Projects</title>
-<meta name="description" content="Jack Schiavo — physics & quantitative economics student building real software products: RestaurQuant, Gala by RQ, a QUBO portfolio optimizer, and quantum computing research.">
+<meta name="description" content="Jack Schiavo — physics & quantitative economics student building real software products: RestaurQuant, Gala by RQ, a QUBO portfolio optimizer, a battery storage arbitrage calculator, and quantum computing research.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,9 +24,10 @@
   <div class="wrap">
     <p class="eyebrow">Physics &amp; Quantitative Economics — Saint Joseph's University</p>
     <h1>I build software that runs real businesses<br>and models real risk.</h1>
-    <p class="hero-sub">Four projects from this summer: a live restaurant-analytics SaaS with paying
+    <p class="hero-sub">Five projects from this summer: a live restaurant-analytics SaaS with paying
       customers, a sister product for wedding &amp; event venues, a quantitative portfolio optimizer,
-      and a quantum-computing forecasting study benchmarked against classical models.</p>
+      a battery storage arbitrage calculator on real energy-market data, and a quantum-computing
+      forecasting study benchmarked against classical models.</p>
     <div class="hero-links">
       <a class="btn btn-primary" href="#projects">See the projects</a>
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
@@ -113,6 +114,32 @@
         </ul>
         <div class="project-links">
           <a href="https://qubo-portfolio-optimizer-production.up.railway.app" target="_blank" rel="noopener">Live app ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media" aria-hidden="true">
+        <div class="mark mark-battery">⚡</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Live — energy markets &amp; optimization</p>
+        <h3>Battery Storage Arbitrage Calculator</h3>
+        <p class="project-desc">
+          An interactive tool that answers a real energy-trading question: what could a grid-scale
+          battery actually earn trading real day-ahead electricity prices? Deliberately built to need
+          zero forecasting — NYISO publishes all 24 hours of next-day prices at once, so optimal
+          battery dispatch against them is a perfect-information linear program, not a prediction
+          problem. Every input change re-solves the real optimization live, against a full year of
+          real NYISO market data.
+        </p>
+        <ul class="project-facts">
+          <li>Live LP solve per request (SciPy/HiGHS, ~0.4s) — not a precomputed lookup table</li>
+          <li>Results land in the range of published real-world battery storage revenue ($20-90+/kW-year)</li>
+          <li>Tunable power, duration, and round-trip efficiency; charge/discharge dispatch charted live</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://battery-arbitrage-calculator-production.up.railway.app" target="_blank" rel="noopener">Live app ↗</a>
         </div>
       </div>
     </article>
