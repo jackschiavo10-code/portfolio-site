@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack Schiavo — Projects</title>
+<meta name="description" content="Jack Schiavo — physics & quantitative economics student building real software products: RestaurQuant, Gala by RQ, a QUBO portfolio optimizer, and quantum computing research.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <span class="wordmark">Jack Schiavo</span>
+    <nav>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Physics &amp; Quantitative Economics — Saint Joseph's University</p>
+    <h1>I build software that runs real businesses<br>and models real risk.</h1>
+    <p class="hero-sub">Four projects from this summer: a live restaurant-analytics SaaS with paying
+      customers, a sister product for wedding &amp; event venues, a quantitative portfolio optimizer,
+      and a quantum-computing forecasting study benchmarked against classical models.</p>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="#projects">See the projects</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="projects">
+  <div class="wrap">
+    <h2 class="section-title">Projects</h2>
+
+    <article class="project project-flagship">
+      <div class="project-media" aria-hidden="true">
+        <div class="mark mark-rq">RQ</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Flagship — live, paying customers</p>
+        <h3>RestaurQuant</h3>
+        <p class="project-desc">
+          A restaurant analytics platform that turns raw POS data (Toast, Square) into the numbers
+          owners actually need to run the business: prime cost, menu-item margin quadrants, labor
+          cost against sales, and revenue trend analysis — with an AI assistant that can answer
+          plain-English questions about the data. Solo-built and solo-operated end to end: product,
+          pricing strategy, live Stripe billing, App Store submission, SEO, and outreach to real
+          restaurants.
+        </p>
+        <ul class="project-facts">
+          <li>Live web app + native iOS app on the App Store</li>
+          <li>Real subscription billing (Stripe), self-serve signup, multi-location support</li>
+          <li>Two-tier pricing differentiated by POS integration cost (Toast vs. Square)</li>
+          <li>Direct POS integrations, nightly data sync, role-based access control</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://restaurquant.com" target="_blank" rel="noopener">restaurquant.com ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media" aria-hidden="true">
+        <div class="mark mark-gala">G</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Live — sister product</p>
+        <h3>Gala by RQ</h3>
+        <p class="project-desc">
+          A per-event profitability tool for wedding venues and banquet halls. Most venues can tell
+          you what an event billed — Gala tells them what it actually made, netting booking revenue
+          against staffing, catering, and vendor costs, with an optional QuickBooks Online connection
+          for venues that already do job costing. Built as a standalone product with its own
+          landing page, billing, and design identity.
+        </p>
+        <ul class="project-facts">
+          <li>Full self-serve product: signup, dashboard, CSV/Excel bulk import, 14-day trial</li>
+          <li>QuickBooks Online integration for automatic per-event financials</li>
+          <li>Hybrid pricing: flat fee for manual entry, usage-based when connected to real books</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://restaurquant.com/gala" target="_blank" rel="noopener">restaurquant.com/gala ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media" aria-hidden="true">
+        <div class="mark mark-qubo">Q</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Live — quant &amp; quantum computing</p>
+        <h3>QUBO Portfolio Optimizer</h3>
+        <p class="project-desc">
+          An interactive portfolio construction tool that formulates stock selection as a
+          cardinality-constrained mean-variance QUBO (Quadratic Unconstrained Binary Optimization)
+          over the real S&amp;P 500 — the same problem structure used in quantum-annealing and QAOA
+          research, solved here at production scale. Given a risk tolerance, capital, and number of
+          holdings, it returns a concrete portfolio, a Monte Carlo range of outcomes, descriptive
+          risk flags (concentration, correlation, volatility), and a hedge-sizing calculator —
+          deliberately built as decision-support analytics, never a buy/sell signal.
+        </p>
+        <ul class="project-facts">
+          <li>Real S&amp;P 500 universe (496 stocks), classical simulated-annealing solver</li>
+          <li>Existing-holdings-aware: new picks avoid correlating with what a user already owns</li>
+          <li>Automated weekly market-data refresh and a running paper-trading simulation</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://qubo-portfolio-optimizer-production.up.railway.app" target="_blank" rel="noopener">Live app ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media" aria-hidden="true">
+        <div class="mark mark-quantum">Ψ</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Research study</p>
+        <h3>Quantum Kernel Electricity-Price Forecasting</h3>
+        <p class="project-desc">
+          A rigorous benchmark of quantum kernel methods against classical machine learning on real
+          electricity market data — twelve months of NYISO day-ahead price and load data for the
+          NYC zone. Two PennyLane quantum kernels (angle-embedding and an IQP-style feature map)
+          were tuned through a twelve-configuration hyperparameter sweep and compared against a
+          tuned classical RBF-SVR, gradient boosting, and an LSTM, with bootstrap confidence
+          intervals on every result rather than a single point estimate.
+        </p>
+        <ul class="project-facts">
+          <li>Result: quantum kernels are statistically indistinguishable from a tuned classical SVR</li>
+          <li>Found and corrected a GBM overfitting trap that inflated error by 2.5x before tuning</li>
+          <li>Built on real public NYISO market data, fully reproducible pipeline</li>
+        </ul>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="wrap about-inner">
+    <h2 class="section-title">About</h2>
+    <p>
+      I'm a rising senior studying Physics and Quantitative Economics (minor in Math) at
+      Saint Joseph's University. Outside the classroom I work part-time on a restaurant floor,
+      which is where RestaurQuant actually started — I kept seeing the gap between the data a
+      POS system collects and the numbers an owner actually needs to make decisions.
+    </p>
+    <p>
+      What connects these projects is the same instinct applied to different domains: take a
+      real decision-making problem — restaurant margins, event profitability, portfolio risk,
+      price forecasting — and build something that gives a straight, honest answer instead of a
+      dashboard full of noise.
+    </p>
+  </div>
+</section>
+
+<footer id="contact" class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <p class="footer-title">Let's talk</p>
+      <p class="footer-sub">Open to finance internships and roles for Summer 2027.</p>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:you@example.com">Email</a>
+      <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Resume (PDF)</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
