@@ -50,7 +50,7 @@ a { color: inherit; }
 .wordmark {
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   letter-spacing: 0.01em;
 }
 
@@ -81,10 +81,10 @@ a { color: inherit; }
 
 .hero h1 {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-size: clamp(2.1rem, 4.5vw, 3.2rem);
   line-height: 1.2;
   margin: 0 0 22px;
-  max-width: 760px;
+  max-width: 800px;
 }
 
 .hero-sub {
@@ -126,7 +126,7 @@ a { color: inherit; }
 
 .section-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.6rem;
+  font-size: 1.9rem;
   margin: 0 0 40px;
 }
 
@@ -174,7 +174,7 @@ a { color: inherit; }
 
 .project-body h3 {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.4rem;
+  font-size: 1.65rem;
   margin: 0 0 14px;
 }
 
@@ -196,7 +196,7 @@ a { color: inherit; }
 .project-links a {
   display: inline-block;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--accent);
   border-bottom: 1px solid transparent;
@@ -230,7 +230,7 @@ a { color: inherit; }
 
 .footer-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.2rem;
+  font-size: 1.45rem;
   margin: 0 0 4px;
 }
 
@@ -256,7 +256,7 @@ a { color: inherit; }
     padding: 16px 0;
   }
 
-  .wordmark { font-size: 1rem; }
+  .wordmark { font-size: 1.2rem; }
 
   .site-header nav a {
     font-size: 0.82rem;
@@ -288,7 +288,7 @@ a { color: inherit; }
     border-radius: 12px;
   }
 
-  .project-body h3 { font-size: 1.25rem; }
+  .project-body h3 { font-size: 1.45rem; }
 
   .about { padding: 4px 0 56px; }
 
