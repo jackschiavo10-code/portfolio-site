@@ -6,7 +6,7 @@
   --line: #e4ded2;
   --accent: #2f5233;
   --accent-soft: #e7ede4;
-  --max: 1080px;
+  --max: 980px;
 }
 
 * { box-sizing: border-box; }
@@ -50,7 +50,7 @@ a { color: inherit; }
 .wordmark {
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 700;
-  font-size: 1.55rem;
+  font-size: 1.1rem;
   letter-spacing: 0.01em;
 }
 
@@ -73,7 +73,7 @@ a { color: inherit; }
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.98rem;
+  font-size: 0.78rem;
   color: var(--accent);
   font-weight: 600;
   margin: 0 0 18px;
@@ -81,27 +81,27 @@ a { color: inherit; }
 
 .hero h1 {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.3rem, 5vw, 3.6rem);
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
   line-height: 1.2;
-  margin: 0 0 24px;
-  max-width: 880px;
+  margin: 0 0 22px;
+  max-width: 760px;
 }
 
 .hero-sub {
-  font-size: 1.3rem;
+  font-size: 1.05rem;
   color: var(--ink-soft);
-  max-width: 880px;
-  margin: 0 0 36px;
+  max-width: 640px;
+  margin: 0 0 32px;
 }
 
 .hero-links { display: flex; gap: 14px; }
 
 .btn {
   display: inline-block;
-  padding: 14px 26px;
+  padding: 12px 22px;
   border-radius: 6px;
   text-decoration: none;
-  font-size: 1.05rem;
+  font-size: 0.92rem;
   font-weight: 600;
   transition: opacity 0.15s ease, background 0.15s ease;
 }
@@ -126,15 +126,15 @@ a { color: inherit; }
 
 .section-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 2.15rem;
+  font-size: 1.6rem;
   margin: 0 0 40px;
 }
 
 .project {
   display: grid;
-  grid-template-columns: 108px 1fr;
+  grid-template-columns: 96px 1fr;
   gap: 32px;
-  padding: 40px 0;
+  padding: 36px 0;
   border-top: 1px solid var(--line);
 }
 
@@ -145,15 +145,15 @@ a { color: inherit; }
 .project-media { display: flex; justify-content: center; padding-top: 4px; }
 
 .mark {
-  width: 76px;
-  height: 76px;
-  border-radius: 16px;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 700;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   color: #fff;
 }
 
@@ -166,39 +166,37 @@ a { color: inherit; }
 .project-tag {
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--accent);
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .project-body h3 {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.9rem;
-  margin: 0 0 16px;
+  font-size: 1.4rem;
+  margin: 0 0 14px;
 }
 
 .project-desc {
-  font-size: 1.15rem;
   color: var(--ink-soft);
-  margin: 0 0 18px;
-  max-width: 900px;
+  margin: 0 0 16px;
+  max-width: 680px;
 }
 
 .project-facts {
-  margin: 0 0 20px;
-  padding-left: 22px;
+  margin: 0 0 18px;
+  padding-left: 20px;
   color: var(--ink-soft);
-  font-size: 1.08rem;
-  max-width: 900px;
+  font-size: 0.93rem;
 }
 
-.project-facts li { margin-bottom: 8px; }
+.project-facts li { margin-bottom: 6px; }
 
 .project-links a {
   display: inline-block;
   text-decoration: none;
-  font-size: 1.15rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--accent);
   border-bottom: 1px solid transparent;
@@ -210,8 +208,7 @@ a { color: inherit; }
 .about { padding: 8px 0 80px; }
 
 .about-inner p {
-  font-size: 1.15rem;
-  max-width: 900px;
+  max-width: 700px;
   color: var(--ink-soft);
   margin: 0 0 18px;
 }
@@ -233,16 +230,16 @@ a { color: inherit; }
 
 .footer-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.65rem;
-  margin: 0 0 6px;
+  font-size: 1.2rem;
+  margin: 0 0 4px;
 }
 
-.footer-sub { margin: 0; color: var(--ink-soft); font-size: 1.05rem; }
+.footer-sub { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
 
 .footer-links a {
   text-decoration: none;
   margin-left: 22px;
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--ink);
 }
@@ -251,6 +248,83 @@ a { color: inherit; }
 
 .footer-links a:hover { color: var(--accent); }
 
+/* Touch devices (phones/tablets) get a bigger, wider layout — this device
+   class is deliberately independent of viewport width, since the page
+   forces a fixed-width viewport on mobile so it renders (then scales down
+   to fit) like the desktop layout instead of a narrow stacked one. */
+@media (hover: none) and (pointer: coarse) {
+  :root { --max: 1080px; }
+
+  .wordmark { font-size: 1.55rem; }
+
+  .eyebrow { font-size: 0.98rem; }
+
+  .hero h1 {
+    font-size: clamp(2.3rem, 5vw, 3.6rem);
+    margin: 0 0 24px;
+    max-width: 880px;
+  }
+
+  .hero-sub {
+    font-size: 1.3rem;
+    max-width: 880px;
+    margin: 0 0 36px;
+  }
+
+  .btn {
+    padding: 14px 26px;
+    font-size: 1.05rem;
+  }
+
+  .section-title { font-size: 2.15rem; }
+
+  .project {
+    grid-template-columns: 108px 1fr;
+    padding: 40px 0;
+  }
+
+  .mark {
+    width: 76px;
+    height: 76px;
+    border-radius: 16px;
+    font-size: 1.75rem;
+  }
+
+  .project-tag { font-size: 0.85rem; margin: 0 0 8px; }
+
+  .project-body h3 { font-size: 1.9rem; margin: 0 0 16px; }
+
+  .project-desc {
+    font-size: 1.15rem;
+    margin: 0 0 18px;
+    max-width: 900px;
+  }
+
+  .project-facts {
+    margin: 0 0 20px;
+    padding-left: 22px;
+    font-size: 1.08rem;
+    max-width: 900px;
+  }
+
+  .project-facts li { margin-bottom: 8px; }
+
+  .project-links a { font-size: 1.15rem; }
+
+  .about-inner p {
+    font-size: 1.15rem;
+    max-width: 900px;
+  }
+
+  .footer-title { font-size: 1.65rem; margin: 0 0 6px; }
+
+  .footer-sub { font-size: 1.05rem; }
+
+  .footer-links a { font-size: 1.05rem; }
+}
+
+/* Narrow browser windows (real small width, not the forced-viewport phone
+   case above) — keeps the stacked single-column layout usable. */
 @media (max-width: 640px) {
   .wrap { padding: 0 20px; }
 
