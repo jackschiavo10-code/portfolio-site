@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1140">
 <title>Jack Schiavo — Projects</title>
-<meta name="description" content="Jack Schiavo — physics & quantitative economics student building real software products: RestaurQuant, Gala by RQ, a QUBO portfolio optimizer, a battery storage arbitrage calculator, and quantum computing research.">
+<meta name="description" content="Jack Schiavo — physics & quantitative economics student building real software products: RestaurQuant, Gala by RQ, a QUBO portfolio optimizer, a battery storage arbitrage calculator, and quantum computing research including a live quantum option-pricing calculator.">
 <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
@@ -24,10 +24,11 @@
   <div class="wrap">
     <p class="eyebrow">Physics &amp; Quantitative Economics — Saint Joseph's University</p>
     <h1>I build software that runs real businesses<br>and models real risk.</h1>
-    <p class="hero-sub">Five projects from this summer: a live restaurant-analytics SaaS with paying
+    <p class="hero-sub">Six projects from this summer: a live restaurant-analytics SaaS with paying
       customers, a sister product for wedding &amp; event venues, a quantitative portfolio optimizer,
-      a battery storage arbitrage calculator on real energy-market data, and a quantum-computing
-      forecasting study benchmarked against classical models.</p>
+      a battery storage arbitrage calculator on real energy-market data, and two quantum-computing
+      studies — one benchmarked against classical machine learning, one a live options-pricing
+      calculator measuring a real quantum speedup.</p>
     <div class="hero-links">
       <a class="btn btn-primary" href="#projects">See the projects</a>
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
@@ -164,6 +165,32 @@
           <li>Found and corrected a GBM overfitting trap that inflated error by 2.5x before tuning</li>
           <li>Built on real public NYISO market data, fully reproducible pipeline</li>
         </ul>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media" aria-hidden="true">
+        <div class="mark mark-optionqae">Q</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Live — quantum computing &amp; derivatives pricing</p>
+        <h3>Option Pricing via Quantum Amplitude Estimation</h3>
+        <p class="project-desc">
+          An interactive calculator that prices real European call and put options using Quantum
+          Amplitude Estimation and measures, live, whether it actually needs less computational work
+          than the classical Monte Carlo method finance normally uses. Every price is computed on
+          request by a real Qiskit quantum-circuit simulation, cross-checked against the closed-form
+          Black-Scholes price, alongside a reference chart proving the quantum method's cost scales
+          close to its theoretical quadratic advantage over classical sampling.
+        </p>
+        <ul class="project-facts">
+          <li>Measured result: quantum cost scales as &epsilon;<sup>-1.04</sup> vs. classical &epsilon;<sup>-2.00</sup> — a real, not assumed, speedup</li>
+          <li>Also validated on real IBM quantum hardware, within a fraction of a cent of the simulator</li>
+          <li>Live call/put pricer, adjustable strike/volatility/expiry/precision, real quantum circuit evaluations per request</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://option-pricing-qae-production.up.railway.app" target="_blank" rel="noopener">Live app ↗</a>
+        </div>
       </div>
     </article>
 
