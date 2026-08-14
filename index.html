@@ -220,6 +220,31 @@
       </div>
     </article>
 
+    <article class="project">
+      <div class="project-media" aria-hidden="true">
+        <div class="mark mark-swing">S</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Research study — quantum computing &amp; derivatives pricing</p>
+        <h3>Swing Option Pricing via Quantum Amplitude Estimation</h3>
+        <p class="project-desc">
+          Swing options add several coupled exercise dates and a shared volume constraint on top of
+          a vanilla option — a genuinely unexplored combination in the quantum computing literature
+          (confirmed by a real search, not assumed). Built a verified classical pricer, a quantum
+          circuit that reproduces it exactly, and measured whether Quantum Amplitude Estimation's
+          proven speedup survives the jump to a path-dependent, multi-decision payoff.
+        </p>
+        <ul class="project-facts">
+          <li>Found and fixed a real bug: a decision made before its own price was known, caught only because an independent classical method disagreed</li>
+          <li>Result: the quantum query-count speedup law survives (&epsilon;<sup>-1.11</sup> vs. classical &epsilon;<sup>-2.00</sup>), but this version's exact circuit costs too much per query to be practical yet</li>
+          <li>Quantum circuit verified against the classical exact price before any scaling claim was made</li>
+        </ul>
+        <div class="project-links">
+          <a href="swing-option-qae.html">Read the full study &rarr;</a>
+        </div>
+      </div>
+    </article>
+
   </div>
 </section>
 
