@@ -163,6 +163,7 @@ a { color: inherit; }
 .mark-battery { background: #1f6b74; }
 .mark-quantum { background: #5a3d6b; }
 .mark-optionqae { background: #a3572b; }
+.mark-ftr { background: #6b2f4a; }
 
 .project-tag {
   text-transform: uppercase;

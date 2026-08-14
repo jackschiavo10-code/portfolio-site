@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=1140">
 <title>Jack Schiavo — Projects</title>
 <meta name="description" content="Jack Schiavo — physics & quantitative economics student building real software products: RestaurQuant, Gala by RQ, a QUBO portfolio optimizer, a battery storage arbitrage calculator, and quantum computing research including a live quantum option-pricing calculator.">
-<link rel="stylesheet" href="styles.css?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
 
@@ -191,6 +191,32 @@
           <li>Found and corrected a GBM overfitting trap that inflated error by 2.5x before tuning</li>
           <li>Built on real public NYISO market data, fully reproducible pipeline</li>
         </ul>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media" aria-hidden="true">
+        <div class="mark mark-ftr">T</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Research study — quantum computing &amp; energy markets</p>
+        <h3>Forecasting, Hedging &amp; Pricing Grid Congestion</h3>
+        <p class="project-desc">
+          A three-part study on Financial Transmission Rights — the standard hedge against grid
+          congestion — asking honestly where quantum computing actually helps. A forecasting model
+          predicts a real NYISO congestion spread, a portfolio optimizer picks which of 110 real
+          contracts to hold, and a quantum option-pricing model prices a right on one of those
+          spreads, wired to the forecasting model's own live prediction rather than a stand-in
+          statistic.
+        </p>
+        <ul class="project-facts">
+          <li>Pricing result: quantum needed ~5,000x fewer computations than classical Monte Carlo at high precision</li>
+          <li>Forecasting result: quantum kernels tie a tuned classical model; a plain LSTM beats both</li>
+          <li>Found the 110-contract universe has only ~11 truly independent sources of risk — and swapping in a real forecast changed which contracts the optimizer recommended</li>
+        </ul>
+        <div class="project-links">
+          <a href="ftr-quantum-research.html">Read the full study &rarr;</a>
+        </div>
       </div>
     </article>
 
