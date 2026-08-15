@@ -238,6 +238,7 @@
           <li>Found and fixed a real bug — a decision made before its own price was known — caught only because an independent classical method disagreed</li>
           <li>A structurally cheaper circuit (verified: Markovian policy, evenly-spaced grid) turned out to need so many more amplitude-estimation queries that it was worse than the original — caught by finishing the total-cost math, not stopping at the flattering number</li>
           <li>Fixed version is ~620,000&times; cheaper than the original at longer contracts, but still loses to classical Monte Carlo — the crossover is decided by precision scaling, not contract length</li>
+          <li>Real IBM hardware run on the smallest possible contract measured much closer to pure noise than to the correct price — confirms, on a real chip, that the circuit is too gate-deep for today's hardware even at its smallest size</li>
         </ul>
         <div class="project-links">
           <a href="swing-option-qae.html">Read the full study &rarr;</a>

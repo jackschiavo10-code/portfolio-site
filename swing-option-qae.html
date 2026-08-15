@@ -115,7 +115,7 @@
   .hero .dek { margin-top: 20px; font-size: 19px; color: var(--muted); max-width: 62ch; line-height: 1.55; }
   .hero .dek b { color: var(--ink); font-weight: 600; }
 
-  .scoreboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 44px; }
+  .scoreboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 44px; }
   .score-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 16px; box-shadow: var(--shadow); }
   .score-card .leg-tag { font-size: 12px; color: var(--faint); margin-bottom: 8px; }
   .score-card .leg-name { font-size: 14.5px; font-weight: 600; margin-bottom: 12px; }
@@ -216,6 +216,7 @@
       <a class="leg" href="#scaling">v1: the cost <span class="verdict-dot" style="background:var(--tie)"></span></a>
       <a class="leg" href="#v2">v2: efficient attempt <span class="verdict-dot" style="background:var(--loss)"></span></a>
       <a class="leg" href="#v3">v3: exact & efficient <span class="verdict-dot" style="background:var(--tie)"></span></a>
+      <a class="leg" href="#hardware">Real hardware <span class="verdict-dot" style="background:var(--tie)"></span></a>
       <a class="leg" href="#meaning">What it means</a>
     </nav>
     <div class="rail-foot">
@@ -255,6 +256,11 @@
           <div class="leg-tag">Final result</div>
           <div class="leg-name">Query law vs. real cost</div>
           <span class="pill tie">Law survives, cost doesn't</span>
+        </div>
+        <div class="score-card">
+          <div class="leg-tag">Real IBM hardware</div>
+          <div class="leg-name">Smallest possible contract</div>
+          <span class="pill tie">Depth wins, not the circuit</span>
         </div>
       </div>
 
@@ -651,6 +657,92 @@
       </div>
     </section>
 
+    <section id="hardware" class="leg">
+      <div class="leg-head">
+        <div>
+          <div class="eyebrow">07 &middot; real hardware</div>
+          <h2 class="serif">Small enough to check, too deep to trust</h2>
+          <p class="lede">
+            The vanilla-option version of this project survived real IBM
+            hardware cleanly. So does swing v3 &mdash; at least the part of
+            it that fits on a single date &mdash; hold up the same way?
+          </p>
+        </div>
+      </div>
+
+      <div class="leg-body">
+        <h3>Checking before spending queue time</h3>
+        <p>
+          Before submitting anything, I checked how deep v3's circuit
+          transpiles on a real 156-qubit device, against the vanilla-option
+          circuit that already ran clean on hardware once.
+        </p>
+        <div class="table-wrap">
+          <table class="report">
+            <thead>
+              <tr><th>Circuit</th><th class="num">Qubits</th><th class="num">2-qubit gates</th><th class="num">Depth</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Vanilla option (already validated on hardware)</td><td class="num">~10</td><td class="num">157</td><td class="num">463</td></tr>
+              <tr><td>Swing v3, toy scale (3 exercise dates)</td><td class="num">43</td><td class="num">~53,000</td><td class="num">~102,000</td></tr>
+              <tr class="emph"><td>Swing v3, smallest possible (1 exercise date)</td><td class="num">26</td><td class="num">~5,100</td><td class="num">~10,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Even the smallest swing option &mdash; one date, take it or don't
+          &mdash; needs about 33&times; more two-qubit gates than the
+          circuit that already survived hardware. At real device error
+          rates, that many sequential two-qubit gates should wash out into
+          noise well before the measurement means anything. I said so
+          before running it, then ran it anyway to find out for real
+          instead of stopping at the estimate.
+        </p>
+
+        <h3>What came back</h3>
+        <div class="table-wrap">
+          <table class="report">
+            <thead>
+              <tr><th></th><th class="num">P(payoff = 1)</th><th class="num">Implied price</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Exact price, from the formula (no simulator)</td><td class="num">0.2176</td><td class="num">0.1327</td></tr>
+              <tr><td>Noiseless simulator, independent check</td><td class="num">0.2229</td><td class="num">0.1360</td></tr>
+              <tr class="emph"><td>Real IBM hardware</td><td class="num">0.4277</td><td class="num">0.2609</td></tr>
+              <tr><td>Pure noise (a coin flip)</td><td class="num">0.5000</td><td class="num">&mdash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The hardware number sits 0.21 away from correct but only 0.07
+          away from a coin flip &mdash; closer to decoherence than to
+          signal. That's the depth estimate confirmed with a real chip
+          instead of left as arithmetic. It also comes with a small bonus:
+          the noiseless simulator run is a second, independent confirmation
+          that v3's exact encoding is actually correct, at a size I hadn't
+          checked before.
+        </p>
+
+        <h3>Where I almost overstated it</h3>
+        <p>
+          My first draft of this section said the same simulator wall from
+          verifying v3 also blocked the noiseless baseline here, on both
+          simulation methods. That was half right: one method genuinely
+          stalls at this size too. The other one didn't &mdash; it just
+          needed four and a half minutes instead of a few seconds, and I'd
+          stopped watching it before it finished. I caught it by waiting
+          for the slow job instead of trusting the assumption, and fixed
+          the writeup before calling this done. "Looks stuck" and "verified
+          stuck" aren't the same claim.
+        </p>
+      </div>
+
+      <div class="verdict-box">
+        <span class="pill tie">Prediction confirmed, not disproven</span>
+        <p>Swing v3's exact encoding is too gate-expensive for today's hardware to trust, even at the smallest contract it can price &mdash; a second, independent reason (depth, not just query count) this doesn't reach practicality yet.</p>
+      </div>
+    </section>
+
     <section id="meaning" class="closing">
       <h2 class="serif">What it means</h2>
       <p>
@@ -687,6 +779,15 @@
           with an independent argument instead of either ignored or used
           as an excuse to stop. Same discipline both times: don't claim
           more certainty than what was actually checked.
+        </li>
+        <li>
+          <b>Cost shows up in more than one currency.</b>
+          The total-cost finding above is about how many queries the oracle
+          needs. Real hardware validation found a second, independent bill:
+          how many physical gates the oracle itself costs, and whether a
+          real chip stays coherent long enough to pay it. Even the smallest
+          possible swing contract doesn't &mdash; a different way of
+          confirming the same conclusion, not a repeat of it.
         </li>
       </ul>
     </section>
