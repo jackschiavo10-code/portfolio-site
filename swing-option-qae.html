@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Swing Option Pricing via Quantum Amplitude Estimation — Jack Schiavo</title>
-<meta name="description" content="A genuinely unexplored quantum-finance question: does QAE's quadratic Monte Carlo speedup survive on a path-dependent, multi-decision swing option payoff? Includes a real bug found and fixed via independent cross-checks.">
+<meta name="description" content="Nobody had pointed Quantum Amplitude Estimation at a swing option before. A study of whether its proven Monte Carlo speedup survives the jump, including a real bug caught by an independent cross-check.">
+
 <style>
   :root {
     --bg: #F5F6F7;
@@ -216,9 +217,8 @@
       <a class="leg" href="#meaning">What it means</a>
     </nav>
     <div class="rail-foot">
-      Whether a quantum computing technique's proven speedup survives on a
-      genuinely harder, path-dependent options payoff &mdash; and a bug
-      that only an independent cross-check could catch.
+      Does a proven quantum speedup survive a genuinely harder option?
+      Plus a bug that only showed up because I built two ways to check it.
       <br><br>
       <a href="mailto:jackschiavo10@gmail.com">jackschiavo10@gmail.com</a>
     </div>
@@ -227,17 +227,14 @@
   <main>
     <section id="overview" class="hero">
       <div class="kicker">Research study &middot; quantum computing &amp; derivatives pricing</div>
-      <h1 class="serif">Does a proven quantum speedup survive a harder option?</h1>
+      <h1 class="serif">Does the speedup survive a harder option?</h1>
       <p class="dek">
-        Quantum Amplitude Estimation (QAE) has a proven quadratic
-        sample-efficiency advantage over classical Monte Carlo for pricing
-        a vanilla option &mdash; I validated that on real IBM hardware in
-        an earlier study. A swing option is structurally harder: instead of
-        one payoff at one date, the holder gets several exercise dates
-        coupled by a shared volume limit, so every decision depends on
-        every other one. A literature search found <b>zero</b> prior work
-        combining QAE with swing options &mdash; this is a study of whether
-        that speedup actually survives the jump.
+        Quantum Amplitude Estimation beats classical Monte Carlo on a
+        vanilla option &mdash; I proved that already, on real IBM hardware.
+        A swing option is a different animal: several exercise dates, all
+        fighting over one shared limit, so no single decision stands alone.
+        Nobody had pointed QAE at that. Two literature searches came back
+        empty. So I built it and found out.
       </p>
 
       <div class="scoreboard">
@@ -259,13 +256,11 @@
       </div>
 
       <p style="margin-top:44px; color:var(--muted); max-width:68ch;">
-        Two separate literature searches turned up published quantum work
-        for vanilla options, multi-asset baskets, and Bermudan (multi-date)
-        options &mdash; but nothing for swing options specifically. Every
-        number below is checked against an independently-built classical
-        reference before it's reported, the same discipline as every other
-        study in this line of work: state the result plainly, whichever way
-        it comes out.
+        Vanilla options, baskets, Bermudan options &mdash; all published,
+        all covered. Swing options: nothing. That gap is real, not assumed;
+        I checked it twice. Every number on this page gets checked against
+        a second, independently-built method before I trust it enough to
+        write it down. Whatever it says is what goes on the page.
       </p>
     </section>
 
@@ -285,24 +280,23 @@
 
       <div class="leg-body">
         <p>
-          That shared constraint is what makes it hard. A strip of
-          independent options can be priced one date at a time. A swing
-          option can't: whether it's worth taking a unit today depends on
-          how many you've already taken and how many chances remain &mdash;
-          which means the dates are coupled together, not separable. Toy
-          scenario used here: 3 exercise dates, take between 1 and 2 units
-          total, same market convention (S&#8320;=2.0, volatility=40%,
-          risk-free rate=5%, strike=1.896) as the earlier vanilla-option
-          study, so the two are directly comparable.
+          That shared limit is the whole problem. Price a strip of
+          independent options one date at a time &mdash; fine, easy. A
+          swing option won't let you: whether today's worth taking depends
+          on how many you've already taken and how many chances are left.
+          The dates are stuck to each other. Toy version here: 3 dates,
+          take 1 or 2 units total, same market numbers as the earlier
+          vanilla-option study (S&#8320;=2.0, vol 40%, rate 5%, strike
+          1.896) &mdash; so the two sit next to each other honestly.
         </p>
         <div class="callout">
-          <span class="k">QAE can't solve the optimization itself.</span>
-          Amplitude estimation extracts the expected value of a
-          <i>known</i> function of a random variable &mdash; it doesn't do
-          dynamic decision-making. So the actual approach is a split: a
-          classical solver finds the optimal exercise policy first, then a
-          quantum circuit evaluates the expected payoff of following that
-          fixed policy, and QAE estimates that expectation.
+          <span class="k">QAE can't make the decision for you.</span>
+          It's built to measure the expected value of something you
+          already know how to compute &mdash; not to work out the optimal
+          strategy itself. So the real approach splits in two: a classical
+          solver figures out the best exercise policy first, then the
+          quantum circuit prices what that policy is worth, and QAE does
+          the measuring.
         </div>
       </div>
     </section>
@@ -325,15 +319,13 @@
       <div class="leg-body">
         <h3>The tell</h3>
         <p>
-          It passed its own built-in check, because that check enumerated
-          decision policies over the same wrong assumption about what
-          information a policy could use &mdash; the bug and its test
-          shared a blind spot. It only surfaced because a second,
-          independently-built pricer (Monte Carlo simulation) consistently
-          priced the option <i>higher</i> than the first one &mdash; which
-          is backwards. A worse decision-making process can only produce a
-          lower price than the true optimum, never a higher one. That
-          contradiction was the tell.
+          It passed its own test. Of course it did &mdash; the test was
+          built on the same wrong assumption, checking the bug's homework
+          with the bug's own rulebook. What actually caught it: a second,
+          separately-built Monte Carlo pricer kept coming back
+          <i>higher</i>. Higher is backwards. A worse decision process can
+          only lose value, never gain it. That contradiction is what made
+          me stop and go looking.
         </p>
 
         <h3>Buggy price, at increasing precision</h3>
@@ -360,28 +352,25 @@
           </div>
         </div>
         <p class="note">
-          Simplified single-date test case, used because it's small enough
-          to check by hand. The bug didn't just shift the price &mdash; more
-          computational precision made it converge more confidently to a
-          number that was 14% wrong.
+          Simplified to one date so I could check it by hand. It doesn't
+          just miss &mdash; notice more precision made it miss with more
+          confidence. Wrong, and getting surer of it.
         </p>
 
         <h3>After the fix</h3>
         <p>
-          Moving the decision to <i>after</i> the price is observed &mdash;
-          the correct information order &mdash; brought the fixed pricer to
-          $0.1508 at the same precision, matching both independent
-          references (Monte Carlo, and a from-scratch numerical
-          integration with no shared code) to within a fraction of a
-          percent. Every validation check in the rebuilt pricer now passes
-          against exhaustive brute-force search, using the corrected
-          assumption throughout.
+          Move the decision to <i>after</i> the price shows up &mdash; the
+          only order that actually makes sense &mdash; and the same pricer
+          lands at $0.1508, matching two separate outside checks (Monte
+          Carlo, and a numerical integration built from scratch, no shared
+          code) to a fraction of a percent. Every brute-force check in the
+          rebuilt version passes clean now.
         </p>
       </div>
 
       <div class="verdict-box">
         <span class="pill win">Caught &amp; fixed</span>
-        <p>The bug survived its own test suite. It didn't survive a second, independently-built method disagreeing with it.</p>
+        <p>It survived its own test suite. It didn't survive a second method disagreeing with it.</p>
       </div>
     </section>
 
@@ -401,15 +390,14 @@
 
       <div class="leg-body">
         <p>
-          At this toy scenario's resolution there are 64 possible
-          discretized price paths. Rather than approximate, this version
-          encodes all 64 exactly &mdash; one controlled rotation per path,
-          each carrying that path's exact payoff under the verified policy.
-          Exact, but expensive: unlike a vanilla option's payoff (a handful
-          of comparator gates), a path-dependent, multi-decision payoff
-          doesn't obviously reduce to a small circuit. That's the real open
-          question this version deliberately sidesteps in favor of getting
-          the answer right first.
+          At this resolution there are 64 possible price paths. Instead of
+          approximating, I encoded all 64 exactly &mdash; one rotation per
+          path, each carrying that path's real payoff under the verified
+          policy. Exact, but not cheap: a vanilla option's payoff collapses
+          into a handful of comparator gates. A path-dependent,
+          multi-decision payoff doesn't obviously collapse into anything
+          small. Finding out how is the real open question &mdash; this
+          version answers a different one first: is it even right?
         </p>
         <div class="stats">
           <div class="stat">
@@ -423,12 +411,12 @@
             <div class="sub">95% CI: $0.2850&ndash;$0.3098</div>
           </div>
         </div>
-        <p class="note">The classical exact price falls inside the quantum circuit's own confidence interval &mdash; the circuit is encoding the right thing.</p>
+        <p class="note">The classical exact answer lands inside the circuit's own confidence interval. It's measuring the right thing.</p>
       </div>
 
       <div class="verdict-box">
         <span class="pill win">Verified</span>
-        <p>The quantum circuit and the (now-correct) classical model agree.</p>
+        <p>The circuit and the (now-fixed) classical model agree.</p>
       </div>
     </section>
 
@@ -465,64 +453,59 @@
           </div>
         </div>
         <p class="note">
-          At the tightest precision tested: ~20,000 classical samples vs.
-          roughly 1.6 billion quantum gate-equivalents for equivalent
-          accuracy &mdash; because each quantum query here costs far more
-          than each classical sample.
+          At the tightest precision I tested: about 20,000 classical
+          samples against something like 1.6 billion quantum
+          gate-operations for the same accuracy. Each quantum query here
+          just costs a lot more than each classical sample does.
         </p>
 
         <h3>What that actually means</h3>
         <p>
-          The theoretical result &mdash; fewer <i>queries</i> needed as
-          precision tightens &mdash; genuinely carries over to a
-          path-dependent, multi-decision payoff that's never been tried in
-          the literature before. That's a real, if modest, finding on its
-          own. But this version's exact circuit makes each individual query
-          so expensive that the total work is worse than classical at
-          every precision level actually tested, and since both curves
-          share nearly the same growth rate, that gap doesn't meaningfully
-          close within reach. The theoretical advantage is real; making it
-          practical depends entirely on finding a cheaper way to encode the
-          payoff &mdash; the next open question, not a settled one.
+          The part that matters theoretically is real: fewer queries
+          needed as precision tightens, on a payoff nobody had pointed
+          this at before. That's a genuine result. But this version's
+          circuit makes every query so expensive that the total cost loses
+          to classical at every precision I could actually test, and since
+          both curves grow at almost the same rate, that gap isn't closing
+          on its own. The advantage is real. Making it matter is a
+          different, harder problem &mdash; an open one, not a solved one.
         </p>
       </div>
 
       <div class="verdict-box">
-        <span class="pill tie">Law survives, cost doesn't (yet)</span>
-        <p>A genuine research contribution either way: the advantage isn't automatically killed by path-dependency, but this encoding isn't the one that makes it practical.</p>
+        <span class="pill tie">The law survives. The cost doesn't. Not yet.</span>
+        <p>A real result either way: the advantage isn't automatically killed by path-dependency, but this encoding isn't the one that makes it practical.</p>
       </div>
     </section>
 
     <section id="meaning" class="closing">
       <h2 class="serif">What it means</h2>
       <p>
-        The point of this study isn't "quantum wins" or "quantum loses"
-        &mdash; it's finding out which, on a question nobody had actually
-        checked yet, and being honest about exactly where the line falls.
+        This isn't a "quantum wins" story or a "quantum loses" one. It's
+        finding out which, on a question nobody had checked, and saying so
+        plainly.
       </p>
 
       <ul class="theme-list">
         <li>
-          <b>A gap in the literature isn't the same as a result.</b>
-          Confirming no one had tried this combination was the easy part.
-          The actual finding &mdash; the query-count law survives, the
-          practical cost doesn't yet &mdash; only came from building it and
-          measuring it.
+          <b>A gap in the literature is a starting line, not a result.</b>
+          Confirming nobody had tried this was the easy part. The actual
+          finding &mdash; the query law holds, the real cost doesn't yet
+          &mdash; only showed up once I built it and measured it.
         </li>
         <li>
-          <b>The bug is the best evidence the verification process works.</b>
-          A subtle, self-consistent error that passed its own test suite
-          only surfaced because a second, independently-built method
-          disagreed with it &mdash; and a third, unrelated method broke the
-          tie. That's not a formality; it's the actual mechanism that
-          catches mistakes a single method's internal consistency can't.
+          <b>The bug is the best proof the process works.</b>
+          A quiet, self-consistent mistake that passed its own test only
+          got caught because a second method, built independently,
+          disagreed with it &mdash; and a third one settled the argument.
+          That's not a formality. That's the whole reason to build two of
+          everything.
         </li>
         <li>
-          <b>Correctness first, efficiency second, on purpose.</b>
-          This version's circuit is deliberately the expensive, exact
-          encoding rather than a clever approximation &mdash; so that when
-          the next version tries to make it cheap, there's a verified
-          answer to check it against.
+          <b>Get it right before you get it fast.</b>
+          This circuit is deliberately the expensive, exact version, not a
+          clever shortcut &mdash; so whatever tries to make it cheap later
+          has something real to check itself against.
         </li>
       </ul>
     </section>

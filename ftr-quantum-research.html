@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Forecasting, Hedging &amp; Pricing Grid Congestion — Jack Schiavo</title>
-<meta name="description" content="Three linked quantum-computing studies on Financial Transmission Rights: forecasting real NYISO congestion prices, choosing which contracts to hold, and pricing an option on the spread.">
+<meta name="description" content="Forecast it, choose it, price it: three quantum-computing studies on one real instrument, Financial Transmission Rights, checked against classical methods on real NYISO data.">
 <style>
   :root {
     --bg: #F5F6F7;
@@ -212,8 +212,8 @@
       <a class="leg" href="#meaning">What it means</a>
     </nav>
     <div class="rail-foot">
-      Three studies on Financial Transmission Rights &mdash; the standard
-      hedge against grid congestion &mdash; on real NYISO market data.
+      Three studies, one instrument: forecasting it, choosing it, pricing
+      it. All on real NYISO data.
       <br><br>
       <a href="mailto:jackschiavo10@gmail.com">jackschiavo10@gmail.com</a>
     </div>
@@ -224,13 +224,12 @@
       <div class="kicker">Research study &middot; quantum computing &amp; energy markets</div>
       <h1 class="serif">Does quantum computing help you trade transmission congestion?</h1>
       <p class="dek">
-        A Financial Transmission Right pays its holder the price difference
-        between two points on the power grid &mdash; the standard hedge
-        against congestion. This is a report on three linked studies built
-        around that one instrument: <b>forecasting</b> what it will pay,
-        <b>choosing</b> which ones to hold, and <b>pricing</b> an option on
-        one, each using a quantum method benchmarked honestly against its
-        best classical counterpart on real NYISO market data.
+        A Financial Transmission Right pays out the price gap between two
+        points on the power grid &mdash; the standard hedge against
+        congestion. Three studies, one instrument: <b>forecast</b> what it
+        pays, <b>choose</b> which ones to hold, <b>price</b> an option on
+        one. Each one runs a quantum method against its best classical
+        rival, honestly, on real NYISO data.
       </p>
 
       <div class="scoreboard">
@@ -257,16 +256,13 @@
       </div>
 
       <p style="margin-top:44px; color:var(--muted); max-width:68ch;">
-        All three studies run on the same real data: twelve months of
-        NYISO's public day-ahead price and load reports across its eleven
-        real grid zones &mdash; nothing simulated. The pieces build on each
-        other, too: the portfolio optimizer is wired to consume the
-        forecasting model's actual output, not a separately-computed
-        statistic standing in for it. Every result below is reported the
-        way I'd want a hiring manager to report a research finding to me
-        &mdash; stated plainly, checked against an independent classical
-        reference, never rounded up toward "quantum wins" when the honest
-        answer is a tie.
+        Same real data across all three: twelve months of NYISO's public
+        day-ahead price and load reports, all eleven real grid zones,
+        nothing simulated. They're wired together too &mdash; the
+        portfolio optimizer actually consumes the forecasting model's
+        output, not a stand-in number. Every result below gets checked
+        against an independent classical reference before I write it down.
+        If the honest answer is a tie, it says tie.
       </p>
     </section>
 
@@ -310,23 +306,22 @@
             <div class="val">$14.70</div>
           </div>
         </div>
-        <p class="note">In dollars per megawatt-hour. The quantum and classical kernel's confidence intervals almost completely overlap &mdash; not a loss, not a win, a genuine statistical tie.</p>
+        <p class="note">In dollars per megawatt-hour. Quantum and classical kernel confidence intervals almost completely overlap. Not a loss, not a win &mdash; a real tie.</p>
 
         <h3>What actually happened</h3>
         <p>
-          The plain LSTM won outright, and the reason is architecture, not
-          quantumness: it sees a full week of raw price history, where
-          every kernel method &mdash; quantum or classical &mdash; only
-          sees a five-number snapshot of it. That's a real, useful finding
-          on its own: the bottleneck in this problem was how much context
-          the model could see, not which kernel computed the similarity
-          between points.
+          The plain LSTM won outright, and it's not about quantumness
+          &mdash; it's architecture. It sees a full week of raw price
+          history. Every kernel method, quantum or classical, only gets a
+          five-number snapshot of it. That's a real finding on its own:
+          the bottleneck here was how much context the model could see,
+          not which kernel measured similarity between points.
         </p>
       </div>
 
       <div class="verdict-box">
         <span class="pill tie">Tie</span>
-        <p>Quantum matches classical, but neither beats a plain LSTM with more context. Kernel choice wasn't the bottleneck here &mdash; architecture was.</p>
+        <p>Quantum matches classical. Neither beats a plain LSTM with more context. Architecture was the bottleneck, not kernel choice.</p>
       </div>
     </section>
 
@@ -348,31 +343,27 @@
       <div class="leg-body">
         <h3>What the data itself turned up</h3>
         <div class="callout">
-          <span class="k">The real finding wasn't about quantum versus classical.</span>
-          All 110 possible contracts are just price differences built from
-          the same 11 underlying zone prices &mdash; so the whole universe
-          only has about 11 truly independent sources of risk, not 110. The
-          unconstrained mathematical optimum ends up concentrated in just
-          two contracts, no matter how many positions you're allowed to
-          hold. That's a genuinely different problem shape than a stock
-          portfolio, where hundreds of names really are close to
-          independent bets.
+          <span class="k">The real finding wasn't quantum versus classical.</span>
+          All 110 contracts are just price differences built off the same
+          11 zone prices &mdash; so the real universe is about 11
+          independent bets, not 110. Let the math run free and it piles
+          into two contracts, no matter how many you're allowed to hold.
+          That's a different problem shape than a stock portfolio, where
+          hundreds of names are actually close to independent.
         </div>
         <p>
-          At small scale, where an exact answer is checkable, both the
-          annealing method and a real gate-based quantum algorithm (QAOA)
-          landed on the exact right answer. That's a correctness result:
-          the quantum method works. It isn't a speed result &mdash; the
-          classical annealing solved the identical problem faster with
-          less machinery.
+          At small scale, where I can check the exact answer, both the
+          annealing method and a real gate-based algorithm (QAOA) landed
+          on it dead-on. That's a correctness result &mdash; the method
+          works. It's not a speed result: classical annealing solved the
+          same problem faster, with less machinery.
         </p>
 
         <h3>Wiring in a real forecast</h3>
         <p>
-          The clean test of whether any of this matters in practice: swap
-          one contract's assumed value for the forecasting model's actual,
-          real-time prediction, and see whether the recommended portfolio
-          changes.
+          The real test: swap one contract's assumed value for the
+          forecasting model's actual prediction, and see if the
+          recommended portfolio moves.
         </p>
         <div class="table-wrap">
           <table class="report">
@@ -387,18 +378,17 @@
           </table>
         </div>
         <p>
-          The forecast disagreed with history on both counts that matter:
-          lower expected value, higher risk, even measured over the
-          identical window. Once that became the actual input, the
-          optimizer dropped the contract entirely and picked a different
-          one instead. Not a relabeling exercise &mdash; a forecast that,
-          when actually used, changed the recommendation.
+          The forecast disagreed with history on both counts that matter
+          &mdash; lower expected value, higher risk, same window. Feed
+          that in and the optimizer drops the contract entirely, picks
+          something else. Not a relabeling exercise. A forecast that
+          actually changed the answer.
         </p>
       </div>
 
       <div class="verdict-box">
         <span class="pill tie">Structural finding</span>
-        <p>The domain shape mattered more than the algorithm, and using the model's real forecast changed the answer.</p>
+        <p>The shape of the problem mattered more than the algorithm did. Using the real forecast changed the answer.</p>
       </div>
     </section>
 
@@ -442,18 +432,17 @@
 
         <h3>Why the gap is bigger than a stock option's</h3>
         <p>
-          That gap is bigger than the equivalent result on a standard
-          stock option, and the reason is itself informative: this is the
-          same quadratic-versus-linear scaling law in both cases, just made
-          more dramatic here because a real congestion spread is far
-          noisier than a near-the-money stock option, and the classical
-          method's cost scales directly with that noise.
+          Bigger gap than the equivalent stock-option result, and the
+          reason tells you something: same quadratic-versus-linear law
+          both times, just more dramatic here because a real congestion
+          spread is noisier than a near-the-money stock option &mdash; and
+          classical cost scales straight off that noise.
         </p>
       </div>
 
       <div class="verdict-box">
         <span class="pill win">Win</span>
-        <p>The clearest, largest measured speedup across this whole line of research &mdash; the theoretically-predicted advantage shows up cleanly on real, noisy market data.</p>
+        <p>The clearest, biggest speedup in this whole line of work. The predicted advantage shows up clean, on real noisy market data.</p>
       </div>
     </section>
 
@@ -461,9 +450,8 @@
       <h2 class="serif">What it means</h2>
       <p>
         Put together, these three studies say something more useful than
-        "quantum computing works" or "quantum computing doesn't" &mdash;
-        they say where it does, on a real problem, checked instead of
-        assumed.
+        "quantum works" or "quantum doesn't." They say where it does, on a
+        real problem, checked instead of assumed.
       </p>
 
       <ul class="theme-list">
@@ -471,28 +459,27 @@
           <b>The advantage isn't uniform, and that's the finding.</b>
           Pricing showed a real, large, theory-matching speedup.
           Forecasting showed a tie. Portfolio selection showed the
-          algorithm working correctly but not mattering as much as a fact
-          about the data itself. All three are reported as measured, not
-          smoothed into one headline.
+          algorithm working, correctly, but mattering less than a fact
+          about the data itself. All three get reported as measured
+          &mdash; not smoothed into one headline.
         </li>
         <li>
-          <b>Moving from a textbook problem to a real one broke something every single time, on purpose.</b>
-          A percentage-error metric stopped making sense once prices could
-          go negative. A risk-tolerance parameter tuned for stock returns
-          let risk swamp return by roughly 100&times; on raw energy prices.
-          A standard option-pricing distribution assumed positivity a real
-          congestion spread doesn't have. Every one of these was caught by
-          checking the output against a known-correct answer, not by
-          reasoning about it in advance &mdash; that discipline is the
-          actual point of doing the work this way.
+          <b>Moving from textbook to real broke something every time. Good.</b>
+          A percentage-error metric stopped meaning anything once prices
+          could go negative. A risk-tolerance number tuned for stock
+          returns let risk swamp return by about 100&times; on raw energy
+          prices. A standard pricing distribution assumed a positivity a
+          real congestion spread doesn't have. I caught every one of these
+          by checking the output against a known-correct answer, not by
+          reasoning it out in advance. That's the actual point of building
+          it this way.
         </li>
         <li>
-          <b>The pieces are wired together, not just adjacent.</b>
-          The portfolio optimizer consumes the forecasting model's real
-          output. That's a small integration in absolute terms, but it's
-          the difference between three demos sitting next to each other
-          and one system where a prediction can actually change a
-          decision.
+          <b>These pieces are wired together, not just sitting next to each other.</b>
+          The portfolio optimizer actually consumes the forecasting
+          model's output. Small integration, in absolute terms. But it's
+          the difference between three demos next to each other and one
+          system where a prediction can actually change a decision.
         </li>
       </ul>
     </section>

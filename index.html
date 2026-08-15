@@ -202,12 +202,11 @@
         <p class="project-tag">Research study — quantum computing &amp; energy markets</p>
         <h3>Forecasting, Hedging &amp; Pricing Grid Congestion</h3>
         <p class="project-desc">
-          A three-part study on Financial Transmission Rights — the standard hedge against grid
-          congestion — asking honestly where quantum computing actually helps. A forecasting model
-          predicts a real NYISO congestion spread, a portfolio optimizer picks which of 110 real
-          contracts to hold, and a quantum option-pricing model prices a right on one of those
-          spreads, wired to the forecasting model's own live prediction rather than a stand-in
-          statistic.
+          Three studies, one real instrument: Financial Transmission Rights, the standard hedge
+          against grid congestion. A forecasting model predicts a real NYISO congestion spread, a
+          portfolio optimizer picks which of 110 real contracts to hold, and a quantum
+          option-pricing model prices a right on one of those spreads — wired to the forecasting
+          model's own live prediction, not a stand-in number.
         </p>
         <ul class="project-facts">
           <li>Pricing result: quantum needed ~5,000x fewer computations than classical Monte Carlo at high precision</li>
@@ -228,14 +227,14 @@
         <p class="project-tag">Research study — quantum computing &amp; derivatives pricing</p>
         <h3>Swing Option Pricing via Quantum Amplitude Estimation</h3>
         <p class="project-desc">
-          Swing options add several coupled exercise dates and a shared volume constraint on top of
-          a vanilla option — a genuinely unexplored combination in the quantum computing literature
-          (confirmed by a real search, not assumed). Built a verified classical pricer, a quantum
-          circuit that reproduces it exactly, and measured whether Quantum Amplitude Estimation's
-          proven speedup survives the jump to a path-dependent, multi-decision payoff.
+          A swing option stacks several exercise dates on top of a vanilla option, all fighting over
+          one shared volume limit — nobody had pointed Quantum Amplitude Estimation at that
+          combination before (checked twice, not assumed). Built a verified classical pricer, a
+          quantum circuit that reproduces it exactly, and measured whether QAE's proven speedup
+          survives the jump.
         </p>
         <ul class="project-facts">
-          <li>Found and fixed a real bug: a decision made before its own price was known, caught only because an independent classical method disagreed</li>
+          <li>Found and fixed a real bug — a decision made before its own price was known — caught only because an independent classical method disagreed</li>
           <li>Result: the quantum query-count speedup law survives (&epsilon;<sup>-1.11</sup> vs. classical &epsilon;<sup>-2.00</sup>), but this version's exact circuit costs too much per query to be practical yet</li>
           <li>Quantum circuit verified against the classical exact price before any scaling claim was made</li>
         </ul>
