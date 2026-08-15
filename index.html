@@ -173,6 +173,32 @@
 
     <article class="project">
       <div class="project-media" aria-hidden="true">
+        <div class="mark mark-derivrisk">Δ</div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Live — derivatives &amp; risk management</p>
+        <h3>Derivatives Risk Dashboard</h3>
+        <p class="project-desc">
+          An options risk tool built on real listed contracts, not textbook parameters: live
+          Yahoo Finance option chains, Black-Scholes Greeks solved from the current bid/ask
+          (Yahoo's own implied-vol field is sometimes stale, so this cross-checks it), an
+          implied-vol surface, a multi-leg position builder with a scenario payoff diagram, and a
+          historical delta-hedge backtest that only ever looks backward at real price paths — the
+          same practical, everyday counterpart to the quantum option-pricing work below.
+        </p>
+        <ul class="project-facts">
+          <li>Every chain, Greek, and payoff diagram computed live per request against real quotes</li>
+          <li>Implied vol solved from bid/ask mid with a floor check that catches stale quotes Yahoo's own field misses</li>
+          <li>Delta-hedge backtest never uses a future price — same no-forecasting discipline as the battery arbitrage tool</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://derivatives-risk-dashboard-production.up.railway.app" target="_blank" rel="noopener">Live app ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-media" aria-hidden="true">
         <div class="mark mark-quantum">Ψ</div>
       </div>
       <div class="project-body">
