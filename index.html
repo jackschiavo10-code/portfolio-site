@@ -229,14 +229,15 @@
         <p class="project-desc">
           A swing option stacks several exercise dates on top of a vanilla option, all fighting over
           one shared volume limit — nobody had pointed Quantum Amplitude Estimation at that
-          combination before (checked twice, not assumed). Built a verified classical pricer, a
-          quantum circuit that reproduces it exactly, and measured whether QAE's proven speedup
-          survives the jump.
+          combination before (checked twice, not assumed). Three actual builds, not one: an
+          exact-but-exponential circuit, an efficient version that looked like a win until the total
+          cost said otherwise, and a fix that keeps the real insight while dropping the part that
+          made things worse.
         </p>
         <ul class="project-facts">
           <li>Found and fixed a real bug — a decision made before its own price was known — caught only because an independent classical method disagreed</li>
-          <li>Result: the quantum query-count speedup law survives (&epsilon;<sup>-1.11</sup> vs. classical &epsilon;<sup>-2.00</sup>), but this version's exact circuit costs too much per query to be practical yet</li>
-          <li>Quantum circuit verified against the classical exact price before any scaling claim was made</li>
+          <li>A structurally cheaper circuit (verified: Markovian policy, evenly-spaced grid) turned out to need so many more amplitude-estimation queries that it was worse than the original — caught by finishing the total-cost math, not stopping at the flattering number</li>
+          <li>Fixed version is ~620,000&times; cheaper than the original at longer contracts, but still loses to classical Monte Carlo — the crossover is decided by precision scaling, not contract length</li>
         </ul>
         <div class="project-links">
           <a href="swing-option-qae.html">Read the full study &rarr;</a>

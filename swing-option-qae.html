@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Swing Option Pricing via Quantum Amplitude Estimation — Jack Schiavo</title>
-<meta name="description" content="Nobody had pointed Quantum Amplitude Estimation at a swing option before. A study of whether its proven Monte Carlo speedup survives the jump, including a real bug caught by an independent cross-check.">
+<meta name="description" content="Three builds, not one: an exact-but-exponential circuit, an efficient version that turned out to make things worse, and a fix that combines both wins. Includes a real bug caught by an independent cross-check.">
 
 <style>
   :root {
@@ -212,13 +212,16 @@
       <a class="leg" href="#overview">Overview</a>
       <a class="leg" href="#contract">The contract</a>
       <a class="leg" href="#bug">A real bug <span class="verdict-dot" style="background:var(--win)"></span></a>
-      <a class="leg" href="#circuit">The circuit <span class="verdict-dot" style="background:var(--win)"></span></a>
-      <a class="leg" href="#scaling">The scaling result <span class="verdict-dot" style="background:var(--tie)"></span></a>
+      <a class="leg" href="#circuit">v1: exact circuit <span class="verdict-dot" style="background:var(--win)"></span></a>
+      <a class="leg" href="#scaling">v1: the cost <span class="verdict-dot" style="background:var(--tie)"></span></a>
+      <a class="leg" href="#v2">v2: efficient attempt <span class="verdict-dot" style="background:var(--loss)"></span></a>
+      <a class="leg" href="#v3">v3: exact & efficient <span class="verdict-dot" style="background:var(--tie)"></span></a>
       <a class="leg" href="#meaning">What it means</a>
     </nav>
     <div class="rail-foot">
-      Does a proven quantum speedup survive a genuinely harder option?
-      Plus a bug that only showed up because I built two ways to check it.
+      Three rounds of building: exact but exponential, efficient but wrong,
+      then efficient and exact &mdash; and a plausible-looking optimization
+      that turned out to make things worse, caught only by measuring it.
       <br><br>
       <a href="mailto:jackschiavo10@gmail.com">jackschiavo10@gmail.com</a>
     </div>
@@ -244,12 +247,12 @@
           <span class="pill win">Genuinely new</span>
         </div>
         <div class="score-card">
-          <div class="leg-tag">Correctness</div>
-          <div class="leg-name">Model &amp; circuit</div>
-          <span class="pill win">Verified, bug fixed</span>
+          <div class="leg-tag">v1 &rarr; v2 &rarr; v3</div>
+          <div class="leg-name">Three builds, not one</div>
+          <span class="pill tie">One made it worse</span>
         </div>
         <div class="score-card">
-          <div class="leg-tag">Scaling</div>
+          <div class="leg-tag">Final result</div>
           <div class="leg-name">Query law vs. real cost</div>
           <span class="pill tie">Law survives, cost doesn't</span>
         </div>
@@ -260,7 +263,9 @@
         all covered. Swing options: nothing. That gap is real, not assumed;
         I checked it twice. Every number on this page gets checked against
         a second, independently-built method before I trust it enough to
-        write it down. Whatever it says is what goes on the page.
+        write it down. Whatever it says is what goes on the page &mdash;
+        including the version (v2, below) that looked like a clear win
+        until I actually measured its total cost and found out it wasn't.
       </p>
     </section>
 
@@ -377,7 +382,7 @@
     <section id="circuit" class="leg">
       <div class="leg-head">
         <div>
-          <div class="eyebrow">03 &middot; the circuit</div>
+          <div class="eyebrow">03 &middot; v1, round one</div>
           <h2 class="serif">Encoding a path-dependent payoff exactly</h2>
           <p class="lede">
             With the classical policy verified correct, the quantum circuit
@@ -423,7 +428,7 @@
     <section id="scaling" class="leg">
       <div class="leg-head">
         <div>
-          <div class="eyebrow">04 &middot; the scaling result</div>
+          <div class="eyebrow">04 &middot; v1's cost</div>
           <h2 class="serif">The speedup law survives. The cost doesn't, yet.</h2>
           <p class="lede">
             Same measurement as the vanilla-option study: sweep target
@@ -478,34 +483,210 @@
       </div>
     </section>
 
+    <section id="v2" class="leg">
+      <div class="leg-head">
+        <div>
+          <div class="eyebrow">05 &middot; the efficient attempt</div>
+          <h2 class="serif">A real structural insight, spent the wrong way</h2>
+          <p class="lede">
+            v1's circuit is exponential because it treats every one of the
+            64 price paths as its own separate case. Two facts, both
+            checked before I trusted them, say it doesn't have to be that
+            way.
+          </p>
+        </div>
+      </div>
+
+      <div class="leg-body">
+        <h3>What actually makes it cheaper</h3>
+        <p>
+          First: the optimal decision at any date only depends on the
+          current price and how many units are already taken &mdash; never
+          on how you got there. I didn't assume that, I checked it, by
+          grouping every decision in the policy by price instead of by
+          path and confirming zero disagreements. Second: the price grid
+          turned out to be evenly spaced, which means the current price is
+          just a running sum of small numbers &mdash; something a quantum
+          circuit can add up cheaply, instead of needing to look at every
+          qubit of every date at once.
+        </p>
+        <p>
+          Rebuilt the circuit around that: one small lookup per date
+          instead of one giant lookup for the whole path. Verified correct
+          again, matching the exact price to within a millionth of a
+          dollar.
+        </p>
+
+        <h3>Per-query cost &mdash; a real win</h3>
+        <div class="barchart">
+          <div class="bar-row">
+            <div class="name">3 exercise dates</div>
+            <div class="bar-track"><div class="bar-fill" style="width:19%"></div></div>
+            <div class="val">5.3&times;</div>
+          </div>
+          <div class="bar-row">
+            <div class="name">6 exercise dates</div>
+            <div class="bar-track"><div class="bar-fill" style="width:55%"></div></div>
+            <div class="val">1,326&times;</div>
+          </div>
+          <div class="bar-row highlight">
+            <div class="name">8 exercise dates</div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+            <div class="val">~86,000&times;</div>
+          </div>
+        </div>
+        <p class="note">Cheaper per oracle call than v1, and the gap explodes as the contract gets longer &mdash; this part of the story is real.</p>
+
+        <div class="callout warn">
+          <span class="k">But cheaper per query isn't the same as cheaper overall.</span>
+          I reported that per-query win as the headline first. It wasn't
+          the full picture, and I only found that out by actually doing
+          the total-cost math instead of stopping at the part that looked
+          good.
+        </div>
+
+        <h3>The part I got wrong at first</h3>
+        <p>
+          This version accumulates each date's payoff by nudging a single
+          qubit's rotation a little at a time &mdash; a small, deliberately
+          gentle nudge, because the technique only stays accurate if the
+          nudges stay small. But amplitude estimation's query count is
+          governed by how small a change it has to resolve. Gentler nudges
+          mean it has to work proportionally harder to notice them.
+          Redoing the full cost comparison &mdash; queries needed
+          <i>times</i> cost per query, not just cost per query alone
+          &mdash; that extra cost turned out to be bigger than the savings
+          at every precision and every calibration I tried. <b>This
+          version is worse than the original, not better.</b>
+        </p>
+      </div>
+
+      <div class="verdict-box">
+        <span class="pill loss">Real insight, wrong execution</span>
+        <p>The per-date decomposition is genuinely cheaper. Nudging one qubit to add up the payoffs erases that gain and then some &mdash; caught only by finishing the actual math instead of stopping at the flattering number.</p>
+      </div>
+    </section>
+
+    <section id="v3" class="leg">
+      <div class="leg-head">
+        <div>
+          <div class="eyebrow">06 &middot; exact and efficient</div>
+          <h2 class="serif">Keeping the real insight, fixing the accumulation</h2>
+          <p class="lede">
+            The per-date decomposition was never the problem. The nudging
+            was. So keep the first part exactly as it was, and replace
+            only how the payoffs get added up.
+          </p>
+        </div>
+      </div>
+
+      <div class="leg-body">
+        <h3>The fix</h3>
+        <p>
+          Instead of nudging a qubit's rotation, add each date's payoff
+          into an actual running-total register, using the same kind of
+          addition circuit that computes the price sums &mdash; verified
+          separately first that it really does add onto an existing value
+          rather than overwrite it, and that its own scratch qubits clean
+          themselves up automatically. Only at the very end does the
+          circuit convert that final total into a rotation, using v1's
+          original exact method, just applied once to a small accumulated
+          number instead of once per raw path.
+        </p>
+
+        <h3>Verifying it &mdash; the honest version</h3>
+        <p>
+          Direct simulation of this circuit hit a real wall: it hung for
+          long stretches on circuit sizes that should have been fast, and
+          I never fully root-caused why, even after ruling out several
+          specific explanations. Rather than force it, I verified the
+          <i>formula</i> the circuit is supposed to compute directly in
+          plain code &mdash; no quantum simulator involved &mdash; and
+          confirmed it converges cleanly to the exact price as precision
+          increases. Then I checked it against the one circuit run that
+          did complete: the two numbers matched exactly. Formula converges
+          to the true price, circuit matches the formula &mdash; together
+          that's a complete verification, just assembled from two
+          directions instead of one straight line.
+        </p>
+
+        <h3>Cost vs. v1 &mdash; the gap that was actually there</h3>
+        <div class="barchart">
+          <div class="bar-row">
+            <div class="name">3 exercise dates</div>
+            <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+            <div class="val">1.3&times;</div>
+          </div>
+          <div class="bar-row">
+            <div class="name">6 exercise dates</div>
+            <div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>
+            <div class="val">360&times;</div>
+          </div>
+          <div class="bar-row highlight">
+            <div class="name">10 exercise dates</div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+            <div class="val">~620,000&times;</div>
+          </div>
+        </div>
+        <p class="note">Barely ahead of v1 at toy scale &mdash; the accumulation step adds its own real cost back &mdash; but the gap grows exactly the way the per-date decomposition predicted, without v2's query penalty dragging it down.</p>
+
+        <h3>Does it finally beat classical?</h3>
+        <p>
+          No. And the reason is the actual finding here: whether quantum
+          beats classical on this problem is decided by how the
+          <i>precision target</i> scales &mdash; the same quadratic-vs-linear
+          gap from the vanilla-option study &mdash; not by how long the
+          contract is. Classical Monte Carlo's own cost grows too, as
+          longer contracts mean noisier payoffs, so the ratio between the
+          two stays roughly the same enormous order of magnitude whether
+          the contract has 3 dates or 10. Building a cheaper circuit made
+          the quantum side better relative to <i>itself</i> (v1, v2) by
+          six orders of magnitude. It didn't touch the actual contest.
+        </p>
+      </div>
+
+      <div class="verdict-box">
+        <span class="pill tie">Fixed, verified, still not practical</span>
+        <p>The efficient decomposition works once paired with the right accumulation method &mdash; a real, six-order-of-magnitude improvement over the first attempt. Beating classical needs a different kind of improvement than either attempt found.</p>
+      </div>
+    </section>
+
     <section id="meaning" class="closing">
       <h2 class="serif">What it means</h2>
       <p>
         This isn't a "quantum wins" story or a "quantum loses" one. It's
-        finding out which, on a question nobody had checked, and saying so
-        plainly.
+        finding out which, on a question nobody had checked, through three
+        actual builds instead of one, and saying plainly what each one
+        found &mdash; including the one that made things worse.
       </p>
 
       <ul class="theme-list">
         <li>
           <b>A gap in the literature is a starting line, not a result.</b>
           Confirming nobody had tried this was the easy part. The actual
-          finding &mdash; the query law holds, the real cost doesn't yet
-          &mdash; only showed up once I built it and measured it.
+          findings &mdash; the query law holds, a plausible optimization
+          can quietly lose more than it wins, fixing that gets most of the
+          way back &mdash; only showed up once I built each version and
+          measured it.
         </li>
         <li>
-          <b>The bug is the best proof the process works.</b>
+          <b>A win on paper isn't a win until you finish the math.</b>
+          v2 looked like a clean improvement on the metric I checked first
+          (cost per query). It wasn't an improvement at all once I checked
+          the metric that actually mattered (total cost). Reporting the
+          first number and stopping there would have been a real, avoidable
+          mistake &mdash; the only reason it isn't in this study is that I
+          went back and finished the comparison instead of trusting the
+          flattering half of it.
+        </li>
+        <li>
+          <b>The bug and the tooling wall got the same treatment.</b>
           A quiet, self-consistent mistake that passed its own test only
-          got caught because a second method, built independently,
-          disagreed with it &mdash; and a third one settled the argument.
-          That's not a formality. That's the whole reason to build two of
-          everything.
-        </li>
-        <li>
-          <b>Get it right before you get it fast.</b>
-          This circuit is deliberately the expensive, exact version, not a
-          clever shortcut &mdash; so whatever tries to make it cheap later
-          has something real to check itself against.
+          got caught by a second, independent method disagreeing with it.
+          An unexplained performance wall in verifying v3 got worked around
+          with an independent argument instead of either ignored or used
+          as an excuse to stop. Same discipline both times: don't claim
+          more certainty than what was actually checked.
         </li>
       </ul>
     </section>
