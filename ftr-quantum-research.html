@@ -208,7 +208,7 @@
       <a class="leg" href="#overview">Overview</a>
       <a class="leg" href="#forecasting">Forecasting <span class="verdict-dot" style="background:var(--tie)"></span></a>
       <a class="leg" href="#portfolio">Portfolio <span class="verdict-dot" style="background:var(--tie)"></span></a>
-      <a class="leg" href="#pricing">Pricing <span class="verdict-dot" style="background:var(--win)"></span></a>
+      <a class="leg" href="#pricing">Pricing <span class="verdict-dot" style="background:var(--tie)"></span></a>
       <a class="leg" href="#meaning">What it means</a>
     </nav>
     <div class="rail-foot">
@@ -246,7 +246,7 @@
         <div class="score-card">
           <div class="leg-tag">Pricing</div>
           <div class="leg-name">Option on the spread</div>
-          <span class="pill win">Win</span>
+          <span class="pill tie">Narrow</span>
         </div>
         <div class="score-card">
           <div class="leg-tag">Integration</div>
@@ -425,24 +425,54 @@
           <div class="stat">
             <div class="label">Query advantage</div>
             <div class="value">~5,000&times;</div>
-            <div class="sub">at high precision</div>
+            <div class="sub">at the tightest precision</div>
+          </div>
+          <div class="stat">
+            <div class="label">After gate cost</div>
+            <div class="value">7.4&times;</div>
+            <div class="sub">same point, queries priced in</div>
           </div>
         </div>
-        <p class="note">At the tightest precision tested: over 4 billion classical samples vs. well under a million quantum queries for the same accuracy.</p>
+        <p class="note">At the tightest precision tested: over 4 billion classical samples vs. well under a million quantum queries for the same accuracy &mdash; but a query is not a sample, and the fourth number above is what happens when you price one.</p>
 
-        <h3>Why the gap is bigger than a stock option's</h3>
+        <h3>Why the query gap is bigger than a stock option's</h3>
         <p>
-          Bigger gap than the equivalent stock-option result, and the
+          Bigger query gap than the equivalent stock-option result, and the
           reason tells you something: same quadratic-versus-linear law
           both times, just more dramatic here because a real congestion
           spread is noisier than a near-the-money stock option &mdash; and
           classical cost scales straight off that noise.
         </p>
+
+        <h3>Finishing the cost math</h3>
+        <p>
+          That 5,000&times; is a count of queries, and queries aren't free.
+          Each one runs a Grover operator that transpiles to 684 gates on
+          this circuit. Multiplying that through is the same check that
+          killed v2 of the swing-option study, so I ran it here too rather
+          than let this page make the mistake that page is about.
+        </p>
+        <p>
+          The advantage survives &mdash; at <b>7.4&times;</b>, not 5,000&times;.
+          Three orders of magnitude of the headline were per-query cost I
+          hadn't priced in. And at two of the fourteen precisions tested the
+          total drops below 1&times;: quantum costs more.
+        </p>
+        <div class="callout">
+          <span class="k">The caveat that matters more now.</span>
+          This compares classical <i>samples</i> against quantum
+          <i>gate operations</i>, and a sample isn't one operation &mdash;
+          it's a draw plus a payoff evaluation, call it tens of flops. At
+          5,000&times; that sloppiness was irrelevant. At 7.4&times; it's the
+          entire margin. The honest read: the query-scaling law is real and
+          clean, and the total-cost advantage on this problem is small enough
+          that it depends on how you count.
+        </div>
       </div>
 
       <div class="verdict-box">
-        <span class="pill win">Win</span>
-        <p>The clearest, biggest speedup in this whole line of work. The predicted advantage shows up clean, on real noisy market data.</p>
+        <span class="pill tie">Narrow</span>
+        <p>The query law holds clean, on real noisy market data &mdash; that part is solid. The 5,000&times; headline doesn't survive its own cost math: 7.4&times; once queries are priced, and inside the noise of how you count a classical sample.</p>
       </div>
     </section>
 
@@ -457,11 +487,12 @@
       <ul class="theme-list">
         <li>
           <b>The advantage isn't uniform, and that's the finding.</b>
-          Pricing showed a real, large, theory-matching speedup.
-          Forecasting showed a tie. Portfolio selection showed the
-          algorithm working, correctly, but mattering less than a fact
-          about the data itself. All three get reported as measured
-          &mdash; not smoothed into one headline.
+          Pricing showed the query law holding exactly as theory
+          predicts, and a total-cost advantage that nearly vanished once
+          I priced the queries. Forecasting showed a tie. Portfolio
+          selection showed the algorithm working, correctly, but mattering
+          less than a fact about the data itself. All three get reported as
+          measured &mdash; not smoothed into one headline.
         </li>
         <li>
           <b>Moving from textbook to real broke something every time. Good.</b>

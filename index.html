@@ -24,11 +24,11 @@
   <div class="wrap">
     <p class="eyebrow">Physics &amp; Quantitative Economics — Saint Joseph's University</p>
     <h1>I build software that runs real businesses<br>and models real risk.</h1>
-    <p class="hero-sub">Six projects from this summer: a live restaurant-analytics SaaS with paying
-      customers, a sister product for wedding &amp; event venues, a quantitative portfolio optimizer,
-      a battery storage arbitrage calculator on real energy-market data, and two quantum-computing
-      studies — one benchmarked against classical machine learning, one a live options-pricing
-      calculator measuring a real quantum speedup.</p>
+    <p class="hero-sub">Nine projects from this summer: two live software businesses with paying
+      customers, four interactive quant tools that run a real optimization or a real pricing model on
+      every request &mdash; portfolio construction, battery arbitrage, options risk, and quantum option
+      pricing &mdash; and three quantum-computing research studies, each measured against its best
+      classical rival and reported the way it came out, ties and losses included.</p>
     <div class="hero-links">
       <a class="btn btn-primary" href="#projects">See the projects</a>
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
@@ -161,7 +161,7 @@
           close to its theoretical quadratic advantage over classical sampling.
         </p>
         <ul class="project-facts">
-          <li>Measured result: quantum cost scales as &epsilon;<sup>-1.04</sup> vs. classical &epsilon;<sup>-2.00</sup> — a real, not assumed, speedup</li>
+          <li>Measured result: quantum <em>query count</em> scales as &epsilon;<sup>-1.04</sup> vs. classical &epsilon;<sup>-2.00</sup> — a real, not assumed, scaling law</li>
           <li>Also validated on real IBM quantum hardware, within a fraction of a cent of the simulator</li>
           <li>Live call/put pricer, adjustable strike/volatility/expiry/precision, real quantum circuit evaluations per request</li>
         </ul>
@@ -235,7 +235,7 @@
           model's own live prediction, not a stand-in number.
         </p>
         <ul class="project-facts">
-          <li>Pricing result: quantum needed ~5,000x fewer computations than classical Monte Carlo at high precision</li>
+          <li>Pricing result: ~5,000x fewer oracle <em>queries</em> than classical Monte Carlo at high precision — but only 7.4x once each query's gate cost is priced in</li>
           <li>Forecasting result: quantum kernels tie a tuned classical model; a plain LSTM beats both</li>
           <li>Found the 110-contract universe has only ~11 truly independent sources of risk — and swapping in a real forecast changed which contracts the optimizer recommended</li>
         </ul>
